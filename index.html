@@ -1,0 +1,903 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inside the Noodle Aisle — Quick-Commerce Study</title>
+<meta name="description" content="A short academic study on quick-commerce app placement and pricing. Representational mockup for research purposes only.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<style>
+
+  :root{
+    --paper:#f5f6f8;
+    --paper-raised:#ffffff;
+    --ink:#1c2130;
+    --ink-soft:#565f76;
+    --line:#dfe2ea;
+    --line-soft:#ebedf3;
+    --navy:#28345a;
+    --navy-soft:#eef1f8;
+    --teal:#0f8b8d;
+    --teal-ink:#06393a;
+    --teal-soft:#e3f4f3;
+    --amber:#d97706;
+    --amber-soft:#fdf1de;
+    --danger:#c4432c;
+    --focus:#0f8b8d;
+    --radius-lg:20px;
+    --radius-md:14px;
+    --radius-sm:9px;
+    --shadow-card:0 1px 2px rgba(28,33,48,.04), 0 10px 30px -12px rgba(28,33,48,.14);
+    --accent:var(--teal);
+    --accent-ink:#04302f;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#14161c;
+      --paper-raised:#1c1f28;
+      --ink:#eef0f5;
+      --ink-soft:#a4abbe;
+      --line:#333a4d;
+      --line-soft:#282c39;
+      --navy:#a9b8e6;
+      --navy-soft:#232a42;
+      --teal:#4fd3cf;
+      --teal-ink:#c9f7f2;
+      --teal-soft:#173436;
+      --amber:#f0a94e;
+      --amber-soft:#3a2c15;
+      --danger:#e2705a;
+      --focus:#4fd3cf;
+      --shadow-card:0 1px 2px rgba(0,0,0,.3), 0 10px 30px -12px rgba(0,0,0,.55);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#14161c;
+    --paper-raised:#1c1f28;
+    --ink:#eef0f5;
+    --ink-soft:#a4abbe;
+    --line:#333a4d;
+    --line-soft:#282c39;
+    --navy:#a9b8e6;
+    --navy-soft:#232a42;
+    --teal:#4fd3cf;
+    --teal-ink:#c9f7f2;
+    --teal-soft:#173436;
+    --amber:#f0a94e;
+    --amber-soft:#3a2c15;
+    --danger:#e2705a;
+    --focus:#4fd3cf;
+    --shadow-card:0 1px 2px rgba(0,0,0,.3), 0 10px 30px -12px rgba(0,0,0,.55);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} }
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  /* ---------------- living background ---------------- */
+  .bg-scene{
+    position:fixed; inset:-10vh -10vw; z-index:-1; overflow:hidden; pointer-events:none;
+    will-change:transform;
+  }
+  .blob{
+    position:absolute; width:58vmax; height:58vmax; border-radius:50%;
+    filter:blur(70px); opacity:.32;
+  }
+  .blob-a{
+    top:-22vmax; left:-16vmax;
+    background:radial-gradient(circle at 35% 35%, var(--accent), transparent 70%);
+    animation:driftA 32s ease-in-out infinite alternate;
+    transition:background .8s ease;
+  }
+  .blob-b{
+    top:16vmax; right:-22vmax; opacity:.22;
+    background:radial-gradient(circle at 60% 40%, var(--navy), transparent 70%);
+    animation:driftB 27s ease-in-out infinite alternate;
+  }
+  .blob-c{
+    bottom:-26vmax; left:8vmax; opacity:.2;
+    background:radial-gradient(circle at 50% 50%, var(--amber), transparent 70%);
+    animation:driftC 38s ease-in-out infinite alternate;
+  }
+  @keyframes driftA{ from{transform:translate(0,0) scale(1);} to{transform:translate(7vmax,9vmax) scale(1.15);} }
+  @keyframes driftB{ from{transform:translate(0,0) scale(1);} to{transform:translate(-9vmax,-5vmax) scale(1.1);} }
+  @keyframes driftC{ from{transform:translate(0,0) scale(1);} to{transform:translate(6vmax,-7vmax) scale(1.2);} }
+  @media (prefers-reduced-motion: reduce){
+    .blob{animation:none !important;}
+  }
+
+  /* ---------------- hero ---------------- */
+  .hero{
+    max-width:900px; margin:0 auto; padding:88px 24px 56px; text-align:center;
+  }
+  .hero .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px; letter-spacing:.09em; text-transform:uppercase;
+    color:var(--teal-ink); background:var(--teal-soft);
+    display:inline-block; padding:5px 12px; border-radius:100px;
+    margin-bottom:22px;
+  }
+  .hero h1{
+    font-family:'Fraunces', serif; font-weight:600;
+    font-size:clamp(34px,7vw,62px); line-height:1.04;
+    margin:0 0 18px; text-wrap:balance;
+  }
+  .hero .lede{
+    color:var(--ink-soft); font-size:16.5px; line-height:1.6;
+    max-width:56ch; margin:0 auto 22px;
+  }
+  .hero-meta{
+    font-family:'JetBrains Mono', monospace; font-size:11.5px; letter-spacing:.06em;
+    text-transform:uppercase; color:var(--ink-soft); margin-bottom:44px;
+  }
+  .scroll-cue{
+    display:inline-block; font-size:13px; font-weight:600; color:var(--accent);
+    cursor:pointer; animation:bob 2.1s ease-in-out infinite;
+  }
+  @media (prefers-reduced-motion: reduce){ .scroll-cue{animation:none;} }
+  @keyframes bob{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(7px);} }
+
+  /* ---------------- sticky progress rail ---------------- */
+  .rail-sticky{
+    background:var(--paper);
+    border-bottom:1px solid var(--line-soft);
+    padding:12px 18px;
+  }
+  .progress-rail{ max-width:640px; margin:0 auto; display:flex; gap:6px; }
+  .progress-rail span{
+    flex:1; height:4px; border-radius:100px; background:var(--line-soft); overflow:hidden;
+  }
+  .progress-rail span i{
+    display:block; height:100%; width:0%; background:var(--accent); transition:width .35s ease, background .5s ease;
+  }
+  .progress-rail span.done i{width:100%;}
+  .progress-rail span.active i{width:55%;}
+
+  /* ---------------- chapters ---------------- */
+  .chapters{
+    max-width:640px; margin:0 auto; padding:26px 18px 30px;
+    display:flex; flex-direction:column; gap:18px;
+  }
+  .chapter{
+    background:var(--paper-raised); border:1px solid var(--line);
+    border-radius:var(--radius-lg); box-shadow:var(--shadow-card);
+    padding:30px 26px;
+    opacity:0; transform:translateY(18px);
+    transition:opacity .5s ease, transform .5s ease;
+  }
+  .chapter.chapter--visible{opacity:1; transform:translateY(0);}
+  @media (prefers-reduced-motion: reduce){
+    .chapter{transition:none; opacity:1; transform:none;}
+  }
+
+  .chapter--aisle{
+    margin-left:calc(50% - 50vw); margin-right:calc(50% - 50vw);
+    width:100vw; border-radius:0;
+    border-left:none; border-right:none;
+    border-top:4px solid var(--accent); border-bottom:4px solid var(--accent);
+    background:var(--paper-raised);
+    padding:56px 24px 60px;
+    transition:border-color .5s ease;
+  }
+  .chapter--aisle .chapter-head, .chapter--aisle .chapter-body{
+    max-width:820px; margin-left:auto; margin-right:auto;
+  }
+
+  .chapter--done{ padding:18px 24px; }
+  .chapter--done .chapter-sub{ display:none; }
+  .chapter--done .chapter-title{ font-size:16px; }
+  .chapter--done .chapter-label{ margin-bottom:2px; }
+
+  .chapter-label{
+    font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--ink-soft); margin-bottom:6px;
+  }
+  .chapter-title{
+    font-family:'Fraunces', serif; font-size:23px; font-weight:600; margin:0 0 6px;
+  }
+  .chapter-sub{
+    color:var(--ink-soft); font-size:13.5px; line-height:1.55; margin:0 0 22px;
+  }
+  .chapter-body > p{ color:var(--ink-soft); font-size:13.5px; line-height:1.6; margin:0; }
+
+  .chapter-summary{
+    font-size:14px; font-weight:600; color:var(--ink-soft);
+    display:flex; align-items:center; gap:8px;
+  }
+  .chapter-summary:before{ content:'✓'; color:var(--accent); font-weight:700; font-size:15px; }
+
+  .q{margin-bottom:22px;}
+  .q:last-child{margin-bottom:0;}
+  .q-text{ font-size:15px; font-weight:600; line-height:1.45; margin-bottom:11px; }
+  .q-text .req{color:var(--danger); margin-left:2px;}
+
+  .opt-list{display:flex; flex-direction:column; gap:8px;}
+  .opt-row{
+    display:flex; align-items:center; gap:10px;
+    border:1px solid var(--line); border-radius:var(--radius-sm);
+    padding:11px 13px; cursor:pointer; font-size:14px;
+    transition:border-color .15s, background .15s;
+    background:var(--paper);
+  }
+  .opt-row:hover{border-color:var(--accent);}
+  .opt-row input{accent-color:var(--accent); width:16px; height:16px; flex:none;}
+  .opt-row.checked{border-color:var(--accent); background:var(--teal-soft);}
+
+  .opt-grid{display:grid; grid-template-columns:1fr 1fr; gap:8px;}
+  @media (max-width:420px){.opt-grid{grid-template-columns:1fr;}}
+
+  input[type=text], select{
+    width:100%; font:inherit; font-size:14.5px; padding:11px 13px;
+    border-radius:var(--radius-sm); border:1px solid var(--line);
+    background:var(--paper); color:var(--ink);
+  }
+  input[type=text]:focus, select:focus{outline:2px solid var(--focus); outline-offset:1px;}
+
+  .likert{ display:grid; grid-template-columns:repeat(5,1fr); gap:6px; }
+  .likert label{
+    border:1px solid var(--line); border-radius:var(--radius-sm);
+    padding:9px 4px 8px; text-align:center; cursor:pointer;
+    font-size:12px; color:var(--ink-soft); line-height:1.3;
+    transition:border-color .15s, background .15s, color .15s;
+  }
+  .likert label b{display:block; font-size:15px; color:var(--ink); font-weight:700; margin-bottom:2px;}
+  .likert input{position:absolute; opacity:0; pointer-events:none;}
+  .likert label.checked{border-color:var(--accent); background:var(--teal-soft); color:var(--teal-ink);}
+  .likert label.checked b{color:var(--teal-ink);}
+  .likert-scale-note{
+    display:flex; justify-content:space-between;
+    font-size:10.5px; color:var(--ink-soft); margin-top:5px;
+  }
+
+  .btn-row{display:flex; justify-content:flex-end; margin-top:26px; gap:10px;}
+  .btn{
+    font:inherit; font-weight:600; font-size:14.5px;
+    padding:12px 22px; border-radius:100px; border:1px solid transparent;
+    cursor:pointer; transition:transform .1s ease, opacity .15s, background .3s ease, color .3s ease;
+  }
+  .btn:active{transform:scale(.97);}
+  .btn-primary{background:var(--accent); color:var(--accent-ink);}
+  .btn-primary:disabled{opacity:.35; cursor:not-allowed;}
+  .btn-ghost{background:transparent; border-color:var(--line); color:var(--ink);}
+  .btn-teal{background:var(--teal); color:#04302f;}
+
+  .hint{font-size:12.5px; color:var(--ink-soft); margin-top:8px; line-height:1.5;}
+
+  /* ---------------- disclaimer strip (persistent, never covers content) ---------------- */
+  .disclaimer-bar{
+    position:sticky; top:0; z-index:20;
+    background:var(--paper-raised); border-bottom:1px solid var(--line);
+    color:var(--ink-soft); font-family:'JetBrains Mono', monospace;
+    font-size:10.5px; letter-spacing:.01em; line-height:1.45;
+    padding:9px 18px; text-align:left;
+  }
+  .disclaimer-bar b{ color:var(--ink); }
+
+  /* ---------------- app-screen mockup (representational, generic UI) ---------------- */
+  .app-screen-shell{
+    background:#101319; border-radius:28px; overflow:hidden;
+    box-shadow:0 30px 60px -24px rgba(0,0,0,.55);
+    max-width:820px; margin:0 auto;
+    font-family:'Inter', sans-serif; color:#f4f5f7;
+  }
+  .app-screen-shell::before{ content:''; display:block; height:5px; background:var(--accent); transition:background .5s ease; }
+  .app-screen-mock-label{
+    display:flex; align-items:center; gap:6px; flex-wrap:wrap;
+    font-family:'JetBrains Mono', monospace; font-size:10px; letter-spacing:.03em;
+    color:#8890a3; padding:12px 20px 0;
+  }
+  .app-screen-mock-label b{ color:#c6cbd8; }
+  .app-topbar{ display:flex; align-items:center; gap:12px; padding:14px 20px 10px; }
+  .app-topbar .back{ font-size:20px; color:#9aa0af; }
+  .app-topbar .delivery-badge{
+    background:#1c2029; border:1px solid #2a2f3b; color:var(--accent);
+    font-size:11.5px; font-weight:700; padding:5px 11px; border-radius:100px;
+    font-family:'JetBrains Mono', monospace; transition:color .5s ease;
+  }
+  .app-topbar .cat{ font-size:16px; font-weight:700; margin-left:2px; }
+  .app-search{
+    margin:0 20px 16px; background:#1a1e27; border:1px solid #262b36;
+    border-radius:14px; padding:11px 14px; color:#7d8496; font-size:13px;
+  }
+  .app-products{ padding:2px 20px 26px; display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  @media (max-width:640px){ .app-products{ grid-template-columns:1fr; } }
+  .app-pcard{
+    background:#171b23; border:2px solid #262b36; border-radius:18px;
+    padding:16px; position:relative; cursor:pointer;
+    transition:border-color .2s ease, transform .15s ease;
+  }
+  .app-pcard:hover{ transform:translateY(-3px); }
+  .app-pcard.selected{ border-color:var(--accent); }
+  .app-pcard .thumb{ width:96px; height:96px; margin:0 auto 12px; }
+  .app-pcard .thumb svg{ width:100%; height:100%; }
+  .app-pcard .name{ font-size:14px; font-weight:700; line-height:1.3; margin-bottom:3px; text-align:center; }
+  .app-pcard .pack{ font-size:11px; color:#7d8496; margin-bottom:6px; text-align:center; }
+  .app-pcard .rating{ font-size:11px; color:#c7cad4; margin-bottom:10px; text-align:center; }
+  .app-pcard .rating b{ color:var(--accent); }
+  .app-pcard .price{ font-family:'JetBrains Mono', monospace; font-size:15px; font-weight:600; text-align:center; margin-bottom:10px; }
+  .app-pcard .add{
+    display:block; width:100%; font-size:11.5px; font-weight:700; letter-spacing:.03em;
+    padding:8px 10px; border-radius:10px; background:#1d2129; color:var(--accent);
+    border:1px solid #3a3f2c; cursor:pointer; font-family:inherit;
+    transition:background .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .app-pcard.selected .add{ background:#1c3324; color:#5ee69a; border-color:#2c4a35; }
+  .app-premium-chip{
+    position:absolute; top:-9px; left:12px; background:#3a2c15; color:#f0a94e;
+    border:1px solid #6b4a1e; font-size:9px; font-weight:700; letter-spacing:.05em;
+    text-transform:uppercase; padding:2px 8px; border-radius:100px; font-family:'JetBrains Mono', monospace;
+  }
+  .aisle-hint{ text-align:center; font-size:12px; color:var(--ink-soft); margin-top:18px; }
+
+  .response-code{
+    font-family:'JetBrains Mono', monospace; font-size:13px;
+    background:var(--navy-soft); border:1px dashed var(--line);
+    border-radius:var(--radius-sm); padding:14px; word-break:break-all;
+    color:var(--ink); margin:16px 0;
+  }
+  .copy-row{display:flex; gap:10px; flex-wrap:wrap;}
+
+  /* ---------------- references / footer ---------------- */
+  .refs-section{
+    max-width:640px; margin:36px auto 0; padding:34px 18px 6px;
+    border-top:1px solid var(--line-soft);
+  }
+  .refs-section .chapter-label{ text-align:left; }
+  .refs-section h2{ font-family:'Fraunces', serif; font-size:21px; font-weight:600; margin:6px 0 12px; }
+  .refs-section p{ font-size:13px; color:var(--ink-soft); line-height:1.6; margin:0 0 16px; }
+  .refs-section ol{ padding-left:20px; margin:0; font-size:12.5px; color:var(--ink-soft); line-height:1.7; }
+  .refs-section li{ margin-bottom:12px; }
+  .refs-section li b{ color:var(--ink); }
+
+  footer.small-print{
+    text-align:center; font-size:11.5px; color:var(--ink-soft);
+    margin:26px auto 60px; max-width:640px; padding:0 18px; line-height:1.6;
+  }
+</style>
+</head>
+<body>
+<div class="disclaimer-bar">⚠ <b>Representational mockup</b> — built for academic research only. Not a real app, platform, or company.</div>
+
+<div class="bg-scene" aria-hidden="true">
+  <div class="blob blob-a"></div>
+  <div class="blob blob-b"></div>
+  <div class="blob blob-c"></div>
+</div>
+
+<header class="hero">
+  <span class="eyebrow">FMS · University of Delhi · Dissertation Research</span>
+  <h1>Inside the Noodle Aisle</h1>
+  <p class="lede">A short, interactive look at how quick-commerce apps decide what you see first — and whether it changes what lands in your cart. Everything happens right here on this page.</p>
+  <div class="hero-meta">≈ 3 minutes · fully anonymous · fictional app screens only</div>
+  <div class="scroll-cue" id="scrollCue">↓ Scroll to begin</div>
+</header>
+
+<div class="rail-sticky">
+  <div class="progress-rail" id="progressRail">
+    <span data-key="A"><i></i></span>
+    <span data-key="B"><i></i></span>
+    <span data-key="C"><i></i></span>
+  </div>
+</div>
+
+<main class="chapters" id="chapters"></main>
+
+<section class="refs-section" id="refsSection">
+  <div class="chapter-label">Methodology</div>
+  <h2>Where these questions come from</h2>
+  <p>Every attitudinal item in the "Quick reactions" section is adapted from peer-reviewed marketing research rather than written from scratch. Screening and demographic questions are standard instrument scaffolding, not measured constructs, so they aren't individually cited.</p>
+  <ol>
+    <li><b>Manipulation checks</b> — whether the private-label and national-brand products registered as prominently placed, and whether the price difference was noticed — adapted from Long, F., &amp; Amaldoss, W. (2024). Self-preferencing in e-commerce marketplaces: The role of sponsored advertising and private labels. <i>Marketing Science, 43</i>(5), 925–952; and Choi, S. C., &amp; Turut, O. (2023). National brand's competition with premium private labels: The role of context-dependent preferences. <i>International Journal of Research in Marketing.</i></li>
+    <li><b>Price / value perception items</b> — how the price gap read as an anchor and a value signal — adapted from Choi, S. C., &amp; Turut, O. (2023), as above.</li>
+    <li><b>Brand-switching intention items</b> — willingness to consider, try, replace, and repurchase the private-label option — adapted from Bansal, H. S., Taylor, S. F., &amp; St. James, Y. (2005). "Migrating" to new service providers: Toward a unifying framework of consumers' switching behaviors. <i>Journal of the Academy of Marketing Science, 33</i>(1), 96–115, adapted here to brand-level (rather than platform-level) switching.</li>
+  </ol>
+</section>
+
+<footer class="small-print">
+  Academic research only · Responses are anonymous · No real product brands are shown or evaluated
+</footer>
+
+<script>
+(function(){
+  var state = {
+    step: 'consent',
+    a: { usesQC:null, apps:[], primary:'', frequency:'', awarePL:null, buysNational:null },
+    cond: { placement:null, anchor:null },
+    choice: null,
+    likert: { mc1:null, mc2:null, mc3:null, pa1:null, pa2:null, si1:null, si2:null, si3:null, si4:null },
+    c: { age:'', gender:'', occupation:'', city:'', income:'' }
+  };
+
+  var chaptersEl = document.getElementById('chapters');
+  var railEl = document.getElementById('progressRail');
+  var bgScene = document.querySelector('.bg-scene');
+  var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---- scroll-linked parallax on the background blobs ----
+  if(!reducedMotion && bgScene){
+    var ticking = false;
+    window.addEventListener('scroll', function(){
+      if(!ticking){
+        window.requestAnimationFrame(function(){
+          bgScene.style.transform = 'translateY(' + (window.scrollY * 0.12) + 'px)';
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, {passive:true});
+  }
+
+  var scrollCue = document.getElementById('scrollCue');
+  if(scrollCue){
+    scrollCue.addEventListener('click', function(){
+      chaptersEl.scrollIntoView({behavior: reducedMotion ? 'auto' : 'smooth', block:'start'});
+    });
+  }
+
+  function setRail(section, mode){
+    var map = {A:0,B:1,C:2};
+    var spans = railEl.querySelectorAll('span');
+    spans.forEach(function(s,i){
+      s.classList.remove('active','done');
+      if(i < map[section]) s.classList.add('done');
+      if(i === map[section]) s.classList.add(mode === 'done' ? 'done' : 'active');
+    });
+  }
+
+  function el(html){
+    var t = document.createElement('template');
+    t.innerHTML = html.trim();
+    return t.content.firstElementChild;
+  }
+
+  // Opens a new chapter, appends it to the page, fades it in and smooth-
+  // scrolls it into view (skip the scroll on the very first chapter so the
+  // hero gets seen first).
+  function openChapter(step, label, title, sub, skipScroll){
+    var section = el('<section class="chapter" data-step="'+step+'"><div class="chapter-head"><div class="chapter-label">'+label+'</div><h2 class="chapter-title">'+title+'</h2>'+(sub ? '<p class="chapter-sub">'+sub+'</p>' : '')+'</div><div class="chapter-body"></div></section>');
+    chaptersEl.appendChild(section);
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){ section.classList.add('chapter--visible'); });
+    });
+    if(!skipScroll){
+      setTimeout(function(){
+        section.scrollIntoView({behavior: reducedMotion ? 'auto' : 'smooth', block:'start'});
+      }, reducedMotion ? 0 : 70);
+    }
+    return section;
+  }
+
+  // Collapses a completed chapter into a slim "done" summary bar.
+  function finishChapter(section, summaryHtml){
+    section.classList.add('chapter--done');
+    var body = section.querySelector('.chapter-body');
+    body.innerHTML = '';
+    body.appendChild(el('<div class="chapter-summary">'+summaryHtml+'</div>'));
+  }
+
+  function likertRow(name, question, current, onPick){
+    var row = el('<div class="q"><div class="q-text">'+question+'<span class="req">*</span></div><div class="likert"></div><div class="likert-scale-note"><span>1 · Strongly disagree</span><span>5 · Strongly agree</span></div></div>');
+    var lik = row.querySelector('.likert');
+    for(var v=1; v<=5; v++){
+      (function(v){
+        var lab = el('<label class="'+(current===v?'checked':'')+'"><b>'+v+'</b><input type="radio" name="'+name+'" value="'+v+'"></label>');
+        lab.addEventListener('click', function(){
+          lik.querySelectorAll('label').forEach(function(l){l.classList.remove('checked');});
+          lab.classList.add('checked');
+          onPick(v);
+        });
+        lik.appendChild(lab);
+      })(v);
+    }
+    return row;
+  }
+
+  function optionRow(name, value, text, checked, multi, onChange){
+    var row = el('<label class="opt-row '+(checked?'checked':'')+'"><input type="'+(multi?'checkbox':'radio')+'" name="'+name+'" value="'+value+'"><span>'+text+'</span></label>');
+    var input = row.querySelector('input');
+    input.checked = checked;
+    row.addEventListener('click', function(){
+      if(!multi){
+        document.querySelectorAll('input[name="'+name+'"]').forEach(function(i){ i.closest('.opt-row').classList.remove('checked'); });
+      }
+      setTimeout(function(){
+        row.classList.toggle('checked', input.checked);
+        onChange(input.checked);
+      },0);
+    });
+    return row;
+  }
+
+  // Color-only theming: the platform stays a single fictional brand throughout
+  // (never a real company's name or logo), but its accent color echoes the
+  // family of whichever app the respondent said they use most (Q3 below) —
+  // applied live, across the whole page, the instant they pick it.
+  var THEME_PALETTES = {
+    'Blinkit':           { accent:'#ffce45', ink:'#3a2c05' },
+    'Zepto':             { accent:'#f857a6', ink:'#3a0a24' },
+    'Swiggy Instamart':  { accent:'#ff8a3d', ink:'#3a1c05' },
+    'Flipkart Minutes':  { accent:'#5b9dff', ink:'#052a4a' },
+    'Amazon Now':        { accent:'#39c0c4', ink:'#04302f' },
+    'Other':             { accent:'#ffce45', ink:'#3a2c05' }
+  };
+
+  function applyGlobalTheme(appName){
+    var theme = THEME_PALETTES[appName];
+    var root = document.documentElement.style;
+    if(theme){
+      root.setProperty('--accent', theme.accent);
+      root.setProperty('--accent-ink', theme.ink);
+    } else {
+      root.removeProperty('--accent');
+      root.removeProperty('--accent-ink');
+    }
+  }
+
+  // Simple stand-up-pouch illustration, drawn as SVG so nothing here is a
+  // real product photo or real packaging — colorA/colorB set the gradient,
+  // label is the short mark shown on the pouch.
+  function packetSVG(colorA, colorB, ink, label){
+    var uid = 'g' + Math.random().toString(36).slice(2, 8);
+    return '<svg viewBox="0 0 64 64" width="64" height="64" aria-hidden="true">'+
+      '<defs><linearGradient id="'+uid+'" x1="0" y1="0" x2="1" y2="1">'+
+        '<stop offset="0" stop-color="'+colorA+'"/><stop offset="1" stop-color="'+colorB+'"/>'+
+      '</linearGradient></defs>'+
+      '<path d="M13 11 Q32 2 51 11 L55 55 Q32 61 9 55 Z" fill="url(#'+uid+')" stroke="rgba(0,0,0,.18)" stroke-width="1"/>'+
+      '<path d="M13 11 Q32 2 51 11 L48.5 17.5 Q32 10.5 15.5 17.5 Z" fill="rgba(255,255,255,.4)"/>'+
+      '<path d="M9 55 Q32 61 55 55 L54 50 Q32 55.5 10 50 Z" fill="rgba(0,0,0,.12)"/>'+
+      '<text x="32" y="38" font-family="Fraunces, serif" font-weight="700" font-size="13" fill="'+ink+'" text-anchor="middle">'+label+'</text>'+
+    '</svg>';
+  }
+
+  function productData(){
+    var anchor = state.cond.anchor;
+    var plPrice = anchor ? 36 : 48;
+    var nbPrice = anchor ? 58 : 48;
+    var pl = {
+      key:'PVT', thumb: packetSVG('#ffe27a','#ffb545','#4a3200','FK'),
+      name:'Flikk Kitchen Masala Noodles', pack:'Pack of 4 · 280g',
+      rating:'4.1', ratingCount:'8.4k', price:plPrice, premium:false
+    };
+    var nb = {
+      key:'NAT', thumb: packetSVG('#8fd9c4','#3aa98c','#033026','T'),
+      name:'Tastimo Masala Noodles', pack:'Pack of 4 · 280g',
+      rating:'4.4', ratingCount:'41.2k', price:nbPrice, premium:anchor
+    };
+    return state.cond.placement === 'PL1' ? [pl, nb] : [nb, pl];
+  }
+
+  // ---------------------------------------------------------------- chapters
+
+  function goConsent(){
+    var section = openChapter('consent', 'Before you begin', 'What this study involves',
+      'You\'ll browse one screen from a mocked-up quick-commerce grocery app and make a normal shopping choice, then answer a short set of questions about it. '+
+      'The app screen and the two products on it are <b>fictional</b> — built only for this study and not associated with any real company. '+
+      'Your answers are anonymous and used only for an FMS, University of Delhi dissertation. Participation is voluntary and you can close this tab at any time before submitting.',
+      true);
+    setRail('A','active');
+    var body = section.querySelector('.chapter-body');
+    body.appendChild(el('<div class="btn-row"><button class="btn btn-primary" id="startBtn">Begin →</button></div>'));
+    document.getElementById('startBtn').onclick = function(){
+      finishChapter(section, 'Consent given');
+      goScreening();
+    };
+  }
+
+  function goScreening(){
+    var apps = ['Blinkit','Zepto','Swiggy Instamart','Flipkart Minutes','Amazon Now','Other'];
+    var section = openChapter('screening', 'Section A · About your app use', 'A few quick questions', null);
+    setRail('A','active');
+    var body = section.querySelector('.chapter-body');
+
+    var q1 = el('<div class="q"><div class="q-text">Do you currently use any Q-commerce app (e.g., Blinkit, Zepto, Swiggy Instamart)?<span class="req">*</span></div><div class="opt-list" id="q1"></div></div>');
+    ['Yes','No'].forEach(function(v){
+      q1.querySelector('#q1').appendChild(optionRow('q1', v, v, state.a.usesQC===v, false, function(){ state.a.usesQC=v; validate(); }));
+    });
+    body.appendChild(q1);
+
+    var q2 = el('<div class="q"><div class="q-text">Which Q-commerce apps do you use regularly? (select all that apply)<span class="req">*</span></div><div class="opt-grid" id="q2"></div></div>');
+    apps.forEach(function(v){
+      q2.querySelector('#q2').appendChild(optionRow('q2_'+v, v, v, state.a.apps.indexOf(v)>-1, true, function(checked){
+        var idx = state.a.apps.indexOf(v);
+        if(checked && idx===-1) state.a.apps.push(v);
+        if(!checked && idx>-1) state.a.apps.splice(idx,1);
+        validate();
+      }));
+    });
+    body.appendChild(q2);
+
+    var q3 = el('<div class="q"><div class="q-text">Which app would you call your <b>primary</b> Q-commerce app (used most often)?<span class="req">*</span></div></div>');
+    var sel = el('<select id="q3"><option value="">Choose one…</option>'+apps.map(function(v){return '<option value="'+v+'">'+v+'</option>';}).join('')+'</select>');
+    sel.value = state.a.primary;
+    sel.onchange = function(){
+      state.a.primary = sel.value;
+      applyGlobalTheme(sel.value);
+      validate();
+    };
+    q3.appendChild(sel);
+    body.appendChild(q3);
+    if(state.a.primary) applyGlobalTheme(state.a.primary);
+
+    var q4 = el('<div class="q"><div class="q-text">How frequently do you order on Q-commerce apps?<span class="req">*</span></div><div class="opt-list" id="q4"></div></div>');
+    ['Daily','2–3 times a week','Weekly','Fortnightly','Rarely'].forEach(function(v){
+      q4.querySelector('#q4').appendChild(optionRow('q4', v, v, state.a.frequency===v, false, function(){ state.a.frequency=v; validate(); }));
+    });
+    body.appendChild(q4);
+
+    var q5 = el('<div class="q"><div class="q-text">Are you aware that Q-commerce apps sell their own private-label products alongside national brands?<span class="req">*</span></div><div class="opt-list" id="q5"></div></div>');
+    ['Yes','No'].forEach(function(v){
+      q5.querySelector('#q5').appendChild(optionRow('q5', v, v, state.a.awarePL===v, false, function(){ state.a.awarePL=v; validate(); }));
+    });
+    body.appendChild(q5);
+
+    var q6 = el('<div class="q"><div class="q-text">When you buy instant noodles or a similar packaged snack, do you usually buy a well-known national brand (e.g., Maggi, Yippee, Top Ramen) rather than a store\'s own private-label version?<span class="req">*</span></div><div class="opt-list" id="q6"></div></div>');
+    ['Yes','No',"Don't buy this category"].forEach(function(v){
+      q6.querySelector('#q6').appendChild(optionRow('q6', v, v, state.a.buysNational===v, false, function(){ state.a.buysNational=v; validate(); }));
+    });
+    body.appendChild(q6);
+
+    body.appendChild(el('<div class="btn-row"><button class="btn btn-primary" id="nextA" disabled>Continue →</button></div>'));
+
+    document.getElementById('nextA').onclick = function(){
+      if(state.a.usesQC === 'No'){
+        finishChapter(section, "Doesn't currently use a Q-commerce app");
+        goDisqualified();
+        return;
+      }
+      finishChapter(section, 'Primary app: <b>'+state.a.primary+'</b> · orders '+state.a.frequency.toLowerCase());
+      state.cond.placement = Math.random() < 0.5 ? 'PL1' : 'NB1';
+      state.cond.anchor = Math.random() < 0.5;
+      goAisle();
+    };
+
+    function validate(){
+      var ok = state.a.usesQC && state.a.apps.length>0 && state.a.primary && state.a.frequency && state.a.awarePL && state.a.buysNational;
+      document.getElementById('nextA').disabled = !ok;
+    }
+    validate();
+  }
+
+  function goDisqualified(){
+    var section = openChapter('disq', 'End of study', 'Thanks for your time', null);
+    setRail('A','done');
+    var body = section.querySelector('.chapter-body');
+    body.appendChild(el('<p>This particular study is only for people who currently use a Q-commerce app, so we\'ll stop here. We appreciate you taking a look!</p>'));
+  }
+
+  function goAisle(){
+    var products = productData();
+    var section = openChapter('aisle', 'Section B · The app screen', "Pick what you'd actually add to cart",
+      'Below is a representational mockup of a quick-commerce app screen, styled the way these apps typically look. Browse it like you normally would, then choose whichever product you\'d actually put in your cart.');
+    section.classList.add('chapter--aisle');
+    setRail('B','active');
+    var body = section.querySelector('.chapter-body');
+
+    var shell = el('<div class="app-screen-shell">'+
+      '<div class="app-screen-mock-label">⚠ <b>Representational mockup</b> — built for this study, not a real app</div>'+
+      '<div class="app-topbar"><span class="back">←</span><span class="delivery-badge">8 MINS</span><span class="cat">Instant Noodles &amp; Snacks</span></div>'+
+      '<div class="app-search">🔍  Search for noodles, snacks…</div>'+
+      '<div class="app-products" id="appProducts"></div>'+
+      '</div>');
+    var grid = shell.querySelector('#appProducts');
+
+    products.forEach(function(p){
+      var card = el('<div class="app-pcard" data-key="'+p.key+'">'+
+        (p.premium ? '<span class="app-premium-chip">Premium</span>' : '') +
+        '<div class="thumb">'+p.thumb+'</div>'+
+        '<div class="name">'+p.name+'</div>'+
+        '<div class="pack">'+p.pack+'</div>'+
+        '<div class="rating"><b>★ '+p.rating+'</b> ('+p.ratingCount+')</div>'+
+        '<div class="price">₹'+p.price+'</div>'+
+        '<button class="add" type="button">Add</button>'+
+        '</div>');
+      card.addEventListener('click', function(){
+        if(state.choice) return; // already chosen, ignore further taps
+        grid.querySelectorAll('.app-pcard').forEach(function(c){ c.classList.remove('selected'); c.querySelector('.add').textContent = 'Add'; });
+        card.classList.add('selected');
+        card.querySelector('.add').textContent = 'Added ✓';
+        state.choice = p.key;
+        setTimeout(function(){
+          finishChapter(section, 'Added <b>'+p.name+'</b> to cart');
+          goReactions();
+        }, 420);
+      });
+      grid.appendChild(card);
+    });
+
+    body.appendChild(shell);
+    body.appendChild(el('<div class="aisle-hint">Tap a product to add it to your cart — you\'ll move to the next step automatically.</div>'));
+  }
+
+  function goReactions(){
+    var section = openChapter('reactions', 'Section B · About the screen you just saw', 'Quick reactions',
+      'Thinking about the screen you just browsed, how much do you agree with each statement?');
+    setRail('B','active');
+    var body = section.querySelector('.chapter-body');
+
+    var items = [
+      ['mc1','The private-label product was positioned prominently on the screen I viewed.'],
+      ['mc2','The national brand was positioned prominently on the screen I viewed.'],
+      ['mc3','I noticed a price difference between the two products shown.'],
+      ['pa1',"The national brand's price seemed high relative to the private-label option."],
+      ['pa2','The price difference made the private-label option seem like better value.'],
+      ['si1','I would consider switching from my usual national brand to the private-label product shown.'],
+      ['si2','I intend to try this private-label product on my next Q-commerce order.'],
+      ['si3','I would replace my regular national-brand purchase with this private-label option.'],
+      ['si4','I am likely to repurchase this private-label product in future orders.']
+    ];
+    items.forEach(function(pair){
+      body.appendChild(likertRow(pair[0], pair[1], state.likert[pair[0]], function(v){ state.likert[pair[0]]=v; validate(); }));
+    });
+
+    body.appendChild(el('<div class="btn-row"><button class="btn btn-primary" id="nextLik" disabled>Continue →</button></div>'));
+
+    document.getElementById('nextLik').onclick = function(){
+      finishChapter(section, 'Reactions recorded');
+      goAboutYou();
+    };
+
+    function validate(){
+      var ok = Object.keys(state.likert).every(function(k){ return state.likert[k] !== null; });
+      document.getElementById('nextLik').disabled = !ok;
+    }
+    validate();
+  }
+
+  function goAboutYou(){
+    var section = openChapter('about-you', 'Section C · About you', 'Last step', 'A few background questions — used only in aggregate.');
+    setRail('C','active');
+    var body = section.querySelector('.chapter-body');
+
+    function selectQ(id, label, options, key){
+      var q = el('<div class="q"><div class="q-text">'+label+'<span class="req">*</span></div></div>');
+      var sel = el('<select id="'+id+'"><option value="">Choose one…</option>'+options.map(function(o){return '<option value="'+o+'">'+o+'</option>';}).join('')+'</select>');
+      sel.value = state.c[key];
+      sel.onchange = function(){ state.c[key] = sel.value; validate(); };
+      q.appendChild(sel);
+      return q;
+    }
+
+    body.appendChild(selectQ('age','Age', ['Below 18','18–24','25–34','35–44','45–54','55 and above'], 'age'));
+    body.appendChild(selectQ('gender','Gender', ['Male','Female','Other','Prefer not to say'], 'gender'));
+    body.appendChild(selectQ('occupation','Occupation', ['Student','Salaried','Self-employed or Business','Homemaker','Other'], 'occupation'));
+
+    var cityQ = el('<div class="q"><div class="q-text">City<span class="req">*</span></div></div>');
+    var cityInput = el('<input type="text" id="city" placeholder="e.g., Delhi">');
+    cityInput.value = state.c.city;
+    cityInput.oninput = function(){ state.c.city = cityInput.value.trim(); validate(); };
+    cityQ.appendChild(cityInput);
+    body.appendChild(cityQ);
+
+    body.appendChild(selectQ('income','Monthly personal income', ['No personal income','Below ₹25,000','₹25,000–₹50,000','₹50,001–₹1,00,000','Above ₹1,00,000','Prefer not to say'], 'income'));
+
+    body.appendChild(el('<div class="btn-row"><button class="btn btn-primary" id="nextC" disabled>Submit →</button></div>'));
+
+    document.getElementById('nextC').onclick = function(){
+      finishChapter(section, 'Thanks for sharing a bit about you');
+      goSubmit();
+    };
+
+    function validate(){
+      var ok = state.c.age && state.c.gender && state.c.occupation && state.c.city && state.c.income;
+      document.getElementById('nextC').disabled = !ok;
+    }
+    validate();
+  }
+
+  function makeResponseId(){
+    return 'R-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).slice(2, 6).toUpperCase();
+  }
+  function sanitizeText(v){ return (v||'').replace(/[,|\t\n]/g, ' ').trim(); }
+
+  function buildPayload(){
+    var L = state.likert;
+    return {
+      responseId: state.responseId,
+      timestamp: new Date().toISOString(),
+      placement: state.cond.placement,          // PL1 = private label first, NB1 = national brand first
+      anchor: state.cond.anchor ? 'A1' : 'A0',   // A1 = price anchoring present, A0 = absent
+      choice: state.choice,                      // PVT or NAT
+      mc1: L.mc1, mc2: L.mc2, mc3: L.mc3,
+      pa1: L.pa1, pa2: L.pa2,
+      si1: L.si1, si2: L.si2, si3: L.si3, si4: L.si4,
+      usesQC: state.a.usesQC,
+      appsUsed: state.a.apps.join('|'),
+      primaryApp: state.a.primary,
+      frequency: state.a.frequency,
+      awarePrivateLabel: state.a.awarePL,
+      buysNationalBrand: state.a.buysNational,
+      age: state.c.age,
+      gender: state.c.gender,
+      occupation: state.c.occupation,
+      city: sanitizeText(state.c.city),
+      income: state.c.income
+    };
+  }
+
+  // ---- EDIT THIS once you've deployed the Google Apps Script web app ----
+  var APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyc2XKiU8f5CdApE-0IlfoNsAKlNwk75GHAus8w2tW30vcKkAuyoAHZvtbi5o0BOy3alQ/exec";
+  // -------------------------------------------------------------------------
+
+  function submitResponse(payload){
+    if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL.indexOf('PASTE-YOUR') === 0){
+      return Promise.reject(new Error('not_configured'));
+    }
+    return fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // avoids a CORS preflight against Apps Script
+      body: JSON.stringify(payload)
+    }).then(function(res){
+      if(!res.ok) throw new Error('bad_status');
+      return res.json().catch(function(){ return {}; });
+    });
+  }
+
+  function goSubmit(existingSection){
+    var section = existingSection || openChapter('done', 'Submitting', 'Saving your response…', 'One moment — this only takes a second.');
+    if(existingSection){
+      section.querySelector('.chapter-label').textContent = 'Submitting';
+      section.querySelector('.chapter-title').textContent = 'Saving your response…';
+      var existingSub = section.querySelector('.chapter-sub');
+      if(existingSub) existingSub.textContent = 'One moment — this only takes a second.';
+    }
+    setRail('C','active');
+    var body = section.querySelector('.chapter-body');
+    body.innerHTML = '';
+    var payload = buildPayload();
+
+    submitResponse(payload).then(function(){
+      setRail('C','done');
+      section.querySelector('.chapter-label').textContent = 'All done';
+      section.querySelector('.chapter-title').textContent = 'Thanks for taking part 🎉';
+      var sub = section.querySelector('.chapter-sub');
+      if(sub) sub.innerHTML = 'Your response has been recorded — nothing else to do. Reference ID: <b>'+payload.responseId+'</b>';
+    }).catch(function(){
+      setRail('C','active');
+      var raw = JSON.stringify(payload);
+      section.querySelector('.chapter-label').textContent = 'Almost there';
+      section.querySelector('.chapter-title').textContent = "We couldn't auto-save your response";
+      var sub2 = section.querySelector('.chapter-sub');
+      if(sub2) sub2.textContent = "Your answers are safe on this screen — click below to copy them, then send them to the researcher, or just tap Retry (this is usually a brief connection hiccup).";
+      body.appendChild(el('<div class="response-code" id="codeBox"></div>'));
+      body.appendChild(el('<div class="copy-row"><button class="btn btn-teal" id="copyBtn">Copy My Responses</button><button class="btn btn-primary" id="retryBtn">Retry →</button></div>'));
+      body.appendChild(el('<p class="hint" id="copyHint"></p>'));
+      document.getElementById('codeBox').textContent = raw;
+      document.getElementById('retryBtn').onclick = function(){ goSubmit(section); };
+      document.getElementById('copyBtn').onclick = function(){
+        var hint = document.getElementById('copyHint');
+        function fallbackCopy(){
+          var ta = document.createElement('textarea');
+          ta.value = raw;
+          ta.style.position='fixed'; ta.style.opacity='0';
+          document.body.appendChild(ta);
+          ta.focus(); ta.select();
+          try{ document.execCommand('copy'); hint.textContent = 'Copied to clipboard.'; }
+          catch(e){ hint.textContent = 'Could not auto-copy — please select the text above and copy it manually.'; }
+          document.body.removeChild(ta);
+        }
+        if(navigator.clipboard && navigator.clipboard.writeText){
+          navigator.clipboard.writeText(raw).then(function(){ hint.textContent = 'Copied to clipboard.'; }).catch(fallbackCopy);
+        } else {
+          fallbackCopy();
+        }
+      };
+    });
+  }
+
+  state.responseId = makeResponseId();
+  goConsent();
+})();
+</script>
+
+</body>
+</html>
